@@ -1,0 +1,32 @@
+.container {
+  overflow: 'scroll';
+  padding: '5px';
+}
+.colorSelectionBox {
+  width: 20px;
+  display: flex;
+}
+.controls {
+  margin-bottom: 30px;
+  border: solid 1px lightgray;
+  border-radius: 5px;
+  padding: 10px;
+}
+.cellInternals {
+  color: grey;
+  font-size: 0.8em;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  margin-top: 20px;
+}
+.input {
+  width: 30px;
+  margin-right: 3px;
+}
+.inputLabel {
+  margin: 0 2px 0 3px;
+}
+.innerButtonGroup {
+  margin-top: 20px;
+}

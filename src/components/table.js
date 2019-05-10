@@ -1,64 +1,60 @@
+//eslint-disable-next-line
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './table.css';
 
-const Table = ({ rows, updateCell, removeColumn, removeRow }) => {
+const Table = ({ rows, selectCell, selectedRowIndex, selectedCellIndex }) => {
   if (!rows || !rows.length) return null;
 
-  // Button to remove row
-  const renderRowRemover = index => (
-    <td className={styles.rowDelete}>
-      <span onClick={() => removeRow(index)} />
-    </td>
-  );
-
-  // Button to remove column
-  const renderColumnRemover = index => (
-    <td key={index} className={styles.colDelete}>
-      <span onClick={() => removeColumn(index)} />
-    </td>
-  );
-
-  const renderColumnRemovers = row => (
-    <tr>{row.cells.map((c, i) => renderColumnRemover(i))}</tr>
-  );
-
-  const renderRowCell = rowIndex => (cell, cellIndex) => (
-    <td key={`cell-${cellIndex}`} className={styles.cell}>
-      <input
-        className={styles.input}
-        type="text"
-        value={cell}
-        onChange={e => updateCell(e, rowIndex, cellIndex)}
-      />
-    </td>
-  );
+  const renderRowCell = rowIndex => (cell, cellIndex) => {
+    const CellType = `t${cell.header == 'on' ? 'h' : 'd'}`;
+    return (
+      <CellType
+        key={`cell-${cellIndex}`}
+        colSpan={cell.colspan}
+        rowSpan={cell.rowspan}
+        className={`${styles.cell} ${
+          selectedRowIndex === rowIndex && selectedCellIndex === cellIndex
+            ? styles.selectedCell
+            : ''
+        }`}
+        style={{ backgroundColor: cell.color }}
+        ref={`r${rowIndex}c${cellIndex}`}
+        onClick={() => selectCell(rowIndex, cellIndex)}
+      >
+        <input
+          className={styles.inputDisplay}
+          type="text"
+          readOnly
+          style={{
+            textAlign: cell.header == 'on' ? 'center' : 'left',
+            paddingLeft: cell.header == 'on' ? '0' : '10px',
+            color: cell.color != '#ffffff' ? 'white' : 'black',
+          }}
+          placeholder={`r${rowIndex}:c${cellIndex} data?`}
+          value={cell.data}
+        />
+      </CellType>
+    );
+  };
 
   const renderRow = (row, rowIndex) => {
     const renderCell = renderRowCell(rowIndex);
-    return (
-      <tr key={`row-${rowIndex}`}>
-        {row.cells.map(renderCell)}
-        {renderRowRemover(rowIndex)}
-      </tr>
-    );
+    return <tr key={`row-${rowIndex}`}>{row.cells.map(renderCell)}</tr>;
   };
 
   return (
     <table className={styles.table}>
-      <tbody>
-        {rows.map(renderRow)}
-        {renderColumnRemovers(rows[0])}
-      </tbody>
+      <tbody>{rows.map(renderRow)}</tbody>
     </table>
   );
 };
 
 Table.propTypes = {
   rows: PropTypes.array,
-  updateCell: PropTypes.func,
-  removeColumn: PropTypes.func,
-  removeRow: PropTypes.func,
+  selectedRowIndex: PropTypes.number,
+  selectedCellIndex: PropTypes.number,
+  selectCell: PropTypes.func,
 };
 
 export default Table;
