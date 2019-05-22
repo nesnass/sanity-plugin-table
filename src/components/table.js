@@ -19,7 +19,6 @@ const Table = ({ rows, selectCell, selectedRowIndex, selectedCellIndex }) => {
             : ''
         }`}
         style={{ backgroundColor: cell.color }}
-        ref={`r${rowIndex}c${cellIndex}`}
         onClick={() => selectCell(rowIndex, cellIndex)}
       >
         <input
