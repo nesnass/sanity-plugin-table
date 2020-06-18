@@ -51,7 +51,6 @@ export default class TableInput extends React.Component {
     newValue.heading = event.target.value;
     return onChange(createPatchFrom(newValue));
   };
-
   updateCell = (changedValue, rowIndex, cellIndex, attrib) => {
     const { value, onChange } = this.props;
     // Clone the current table data
@@ -103,7 +102,7 @@ export default class TableInput extends React.Component {
       rows: [
         {
           _key: uuid(),
-          _type: 'row',
+          _type: 'tableRow',
           cells: [
             {
               _type: 'cell',
@@ -129,7 +128,7 @@ export default class TableInput extends React.Component {
     // Clone the current table data
     const newValue = { ...value };
     newValue.rows.splice(rowIndex + 1, 0, {
-      _type: 'row',
+      _type: 'tableRow',
       _key: uuid(),
       cells: [],
     });
@@ -328,20 +327,19 @@ export default class TableInput extends React.Component {
         </div>
       ) : null;
 
-    const heading = value ? (
-      <FormField>
-        <div>
-          <p>Title</p>
-          <TextInput
-            type="text"
-            ref={this.focusRef}
-            value={value.heading === undefined ? '' : value.heading}
-            onChange={e => this.updateHeading(e)}
-          />
-        </div>
-      </FormField>
-    ) : null;
-
+      const heading = value ? (
+        <FormField>
+          <div>
+            <p>Title</p>
+            <TextInput
+              type="text"
+              ref={this.focusRef}
+              value={value.heading === undefined ? '' : value.heading}
+              onChange={e => this.updateHeading(e)}
+            />
+          </div>
+        </FormField>
+      ) : null;
     const table =
       value && value.rows && value.rows.length ? (
         <div>
