@@ -2,7 +2,15 @@
 
 [Sanity](https://www.sanity.io/) plugin that implements a `table` schema type and input component.
 
-![example](https://user-images.githubusercontent.com/8467307/48703530-e369be00-ebeb-11e8-8299-14812461aee8.gif)
+This fork addresses issues listed on the original repository as well as:
+
+- cell content editor separate from the preview
+- row and column spans
+- headers
+- cell colours
+- current cell marker
+
+A title text field is also included
 
 ## Installing
 
